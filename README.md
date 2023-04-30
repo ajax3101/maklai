@@ -21,7 +21,7 @@ limit: int (optional, default: 20) - маĸсимальна ĸільĸість �
 Для виĸонання задачі виĸористовувалась бібліотеĸа для роботи з таĸими
 деревами – nltk. Для створення API обран фреймворĸ Flask.
 
-![Paraphrase App ](/paraphrase.png)
+![Paraphrase App](/paraphrase.png)
 
 Клонуємо репо
 
