@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-gray-200">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex px-2 lg:px-0">
+          <div class="flex-shrink-0 flex items-center">
+            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
+          </div>
+          <div class="hidden lg:ml-6 lg:flex lg:space-x-4">
+            <a href="/" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">Paraphrase</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-0">
+      <h1 class="text-3xl font-bold mb-6">Welcome to Paraphrase App!</h1>
+      <p class="text-xl mb-6">This app allows you to paraphrase English sentences by replacing noun phrases in the
+        original sentence with other similar noun phrases.</p>
+      <h2 class="text-2xl font-bold mb-2">How to use:</h2>
+      <ol class="list-decimal list-inside mb-6">
+        <li class="mb-2">Enter an English sentence in the text box.</li>
+        <li class="mb-2">Click the "Paraphrase" button.</li>
+        <li class="mb-2">The app will generate paraphrases of the original sentence by replacing noun phrases with other
+          similar phrases.</li>
+        <li class="mb-2">The paraphrases will be displayed as trees. Click on a tree to copy it to the clipboard or a json file will be created locally with the result.</li>
+      </ol>
+      <form id="paraphrase-form" action="/paraphrase" method="GET" class="mb-6">
+        <div class="mb-4">
+          <label for="sentence-input" class="block text-xl font-medium text-gray-700">Enter a sentence:</label>
+          <textarea id="sentence-input" name="tree"
+            class="mt-1 p-2 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
+        </div>
+        <button type="submit"
+          class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md font-medium">Paraphrase</button>
+      </form>
+      <div id="paraphrases-container"></div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+
+  <script>
+    new Vue({ el: '#app', 
+    data: {
+        inputTree: '',
+        limit: 20,
+        paraphrases: [],
+        error: ''
+      },
+      methods: {
+        paraphrase: function () {
+          if (!this.inputTree) {
+            this.error = 'Please enter a parse tree.';
+            return;
+          }
+          this.error = '';
+          axios.get('/paraphrase', {
+            params: {
+              tree: this.inputTree,
+              limit: this.limit
+            }
+          })
+            .then(response => {
+              this.paraphrases = response.data.paraphrases;
+            })
+            .catch(error => {
+              this.error = 'An error occurred. Please try again later.';
+            });
+        },
+        clear: function () {
+          this.inputTree = '';
+          this.paraphrases = [];
+          this.error = '';
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
