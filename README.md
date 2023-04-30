@@ -1,8 +1,6 @@
 # Paraphrase
 
-[![Python Version](https://img.shields.io/badge/python-3.11-brightgreen.svg)](https://python.org)
-
-[![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/en/2.3.x/)
+[![Python Version](https://img.shields.io/badge/python-3.11-brightgreen.svg)](https://python.org) [![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/en/2.3.x/)
 
 ## Тестове завдання (Python internship)
 
